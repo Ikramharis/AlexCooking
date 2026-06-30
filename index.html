@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex — Your Malay Kitchen Voice Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#1C1410;
+    --turmeric:#D9A441;
+    --chili:#C1440E;
+    --santan:#F5EDE0;
+    --pandan:#4A6741;
+    --belacan:#6B4226;
+    --line: rgba(245,237,224,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--charcoal);
+    color:var(--santan);
+    font-family:'Plus Jakarta Sans', sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Fraunces', serif;}
+  a{color:inherit;text-decoration:none;}
+
+  /* texture: subtle batik dot grid */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; opacity:0.05; z-index:1;
+    background-image: radial-gradient(circle, var(--turmeric) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:24px 6vw;
+    backdrop-filter: blur(10px);
+    background: linear-gradient(to bottom, rgba(28,20,16,0.85), transparent);
+  }
+  .logo{font-family:'Fraunces',serif; font-size:1.3rem; font-weight:600; letter-spacing:0.5px;}
+  .logo span{color:var(--turmeric);}
+  nav a{margin-left:32px; font-size:0.85rem; font-weight:600; opacity:0.75; transition:opacity .25s;}
+  nav a:hover{opacity:1;}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:140px 6vw 80px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; top:-20%; left:50%; transform:translateX(-50%);
+    width:900px; height:900px;
+    background: radial-gradient(circle, rgba(217,164,65,0.18) 0%, transparent 65%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-size:0.78rem; letter-spacing:3px; text-transform:uppercase;
+    color:var(--turmeric); font-weight:700; margin-bottom:22px;
+    display:inline-flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:"";width:28px;height:1px;background:var(--turmeric);}
+  .eyebrow::after{content:"";width:28px;height:1px;background:var(--turmeric);}
+  .hero h1{
+    font-size: clamp(2.6rem, 7vw, 5.6rem);
+    line-height:1.02;
+    font-weight:600;
+    max-width:16ch;
+    margin-bottom:26px;
+  }
+  .hero h1 em{
+    font-style:italic; color:var(--chili);
+    font-weight:500;
+  }
+  .hero p.sub{
+    max-width:50ch; font-size:1.08rem; line-height:1.65; opacity:0.78; margin-bottom:44px;
+  }
+  .cta-row{display:flex; gap:18px; flex-wrap:wrap; justify-content:center;}
+  .btn{
+    padding:16px 32px; border-radius:100px; font-weight:700; font-size:0.95rem;
+    cursor:pointer; border:1px solid transparent; transition:transform .2s ease, background .2s ease;
+    display:inline-flex; align-items:center; gap:10px;
+  }
+  .btn-primary{background:var(--chili); color:var(--santan);}
+  .btn-primary:hover{transform:translateY(-2px); background:#a83a0c;}
+  .btn-ghost{border-color:var(--line); color:var(--santan);}
+  .btn-ghost:hover{border-color:var(--turmeric); transform:translateY(-2px);}
+
+  /* SIGNATURE: voice waveform shaped like a wok stir-fry arc */
+  .waveform{
+    margin-top:64px; display:flex; align-items:flex-end; gap:5px; height:70px;
+  }
+  .waveform span{
+    width:5px; border-radius:3px; background:var(--turmeric);
+    animation: stir 1.4s ease-in-out infinite;
+  }
+  .waveform span:nth-child(odd){background:var(--chili);}
+  @keyframes stir{
+    0%,100%{height:14px; opacity:.5;}
+    50%{height:var(--h, 50px); opacity:1;}
+  }
+
+  /* SECTION shared */
+  section{padding:120px 6vw; position:relative; z-index:2;}
+  .section-head{max-width:640px; margin-bottom:64px;}
+  .section-head .eyebrow{margin-bottom:14px;}
+  .section-head h2{font-size:clamp(2rem,4vw,3rem); font-weight:600; line-height:1.1;}
+  .section-head p{opacity:0.7; margin-top:16px; font-size:1.02rem; line-height:1.6;}
+
+  /* FEATURES */
+  .features{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:18px; overflow:hidden;
+  }
+  .feature{
+    background:var(--charcoal); padding:38px 30px; transition:background .3s ease;
+  }
+  .feature:hover{background:#241a14;}
+  .feature .mark{
+    font-family:'Fraunces',serif; font-size:1.6rem; color:var(--turmeric); margin-bottom:18px; display:block;
+  }
+  .feature h3{font-size:1.15rem; font-weight:600; margin-bottom:10px;}
+  .feature p{font-size:0.92rem; opacity:0.68; line-height:1.55;}
+
+  /* DEMO / TRANSCRIPT */
+  .demo{
+    background:#231811; border:1px solid var(--line); border-radius:24px;
+    padding:48px; max-width:760px;
+  }
+  .demo-header{display:flex; align-items:center; gap:14px; margin-bottom:30px;}
+  .avatar{
+    width:46px;height:46px;border-radius:50%;
+    background:conic-gradient(var(--turmeric), var(--chili), var(--pandan), var(--turmeric));
+    display:flex;align-items:center;justify-content:center; flex-shrink:0;
+  }
+  .avatar::after{content:"";width:34px;height:34px;border-radius:50%;background:var(--charcoal);}
+  .demo-name{font-weight:700; font-size:1rem;}
+  .demo-status{font-size:0.78rem; color:var(--pandan); display:flex; align-items:center; gap:6px;}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--pandan); animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+  .bubble{
+    margin-bottom:18px; max-width:85%; padding:14px 18px; border-radius:14px;
+    font-size:0.94rem; line-height:1.55; opacity:0; transform:translateY(8px);
+    animation: rise .5s ease forwards;
+  }
+  .bubble.agent{background:#34261b; border-bottom-left-radius:4px;}
+  .bubble.user{background:var(--chili); margin-left:auto; border-bottom-right-radius:4px; color:var(--santan);}
+  .bubble:nth-child(2){animation-delay:.1s;}
+  .bubble:nth-child(3){animation-delay:.5s;}
+  .bubble:nth-child(4){animation-delay:.9s;}
+  .bubble:nth-child(5){animation-delay:1.3s;}
+  @keyframes rise{to{opacity:1; transform:translateY(0);}}
+
+  /* RECIPE STRIP */
+  .strip-wrap{overflow:hidden; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:28px 0;}
+  .strip{display:flex; gap:60px; width:max-content; animation: scroll 28s linear infinite;}
+  .strip span{font-family:'Fraunces',serif; font-size:1.4rem; opacity:0.4; white-space:nowrap;}
+  .strip span em{color:var(--turmeric); font-style:italic; opacity:1;}
+  @keyframes scroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+  /* INGREDIENT GLOSSARY */
+  .glossary{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px;}
+  .gloss-card{
+    border:1px solid var(--line); border-radius:16px; padding:26px;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .gloss-card:hover{border-color:var(--turmeric); transform:translateY(-4px);}
+  .gloss-card .my{font-family:'Fraunces',serif; font-size:1.3rem; color:var(--turmeric); margin-bottom:4px;}
+  .gloss-card .en{font-size:0.85rem; opacity:0.6; margin-bottom:14px;}
+  .gloss-card p{font-size:0.88rem; line-height:1.55; opacity:0.75;}
+
+  /* CTA FOOTER */
+  footer{
+    padding:100px 6vw 50px; text-align:center; position:relative; z-index:2;
+    border-top:1px solid var(--line);
+  }
+  footer h2{font-size:clamp(2rem,5vw,3.4rem); font-weight:600; max-width:14ch; margin:0 auto 28px;}
+  .foot-bottom{
+    margin-top:90px; display:flex; justify-content:space-between; align-items:center;
+    font-size:0.8rem; opacity:0.5; flex-wrap:wrap; gap:14px;
+  }
+
+  @media (max-width:780px){
+    .features{grid-template-columns:1fr;}
+    nav{display:none;}
+    .demo{padding:30px 22px;}
+  }
+
+  /* reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  :focus-visible{outline:2px solid var(--turmeric); outline-offset:3px;}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header>
+  <div class="logo">alex<span>.</span></div>
+  <nav>
+    <a href="#how">How it works</a>
+    <a href="#demo">Demo</a>
+    <a href="#glossary">Glossary</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Voice agent for Malay cooking</div>
+  <h1>Cook rendang without <em>touching</em> a screen.</h1>
+  <p class="sub">Alex talks you through real Malay recipes step by step — ingredients, technique, timing — while your hands stay on the wok. Built on ElevenLabs Conversational AI.</p>
+  <div class="cta-row">
+    <a href="#demo" class="btn btn-primary">▶️ Hear Alex cook</a>
+    <a href="#how" class="btn btn-ghost">How it works</a>
+  </div>
+  <div class="waveform" id="wave"></div>
+</section>
+
+<div class="strip-wrap">
+  <div class="strip" id="strip"></div>
+</div>
+
+<section id="how">
+  <div class="section-head">
+    <div class="eyebrow">How it works</div>
+    <h2>One step at a time, paced to you.</h2>
+    <p>No scrolling, no reading ahead. Alex waits for you to finish each step before moving on — and never loses your place when you ask a question mid-dish.</p>
+  </div>
+  <div class="features">
+    <div class="feature">
+      <span class="mark">01</span>
+      <h3>Says the dish, gathers the rempah</h3>
+      <p>Confirms what you're making and lists every ingredient — Malay name first, English right after — grouped by paste, gravy, and garnish.</p>
+    </div>
+    <div class="feature">
+      <span class="mark">02</span>
+      <h3>Walks the wok with you</h3>
+      <p>One instruction per turn. Knows what "pecah minyak" looks and smells like, and tells you exactly when to move on.</p>
+    </div>
+    <div class="feature">
+      <span class="mark">03</span>
+      <h3>Handles the curveballs</h3>
+      <p>No belacan in the house? Santan splitting? Ask anything mid-recipe — Alex answers, then picks right back up where you left off.</p>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="section-head">
+    <div class="eyebrow">Listen in</div>
+    <h2>A real exchange, mid-rendang.</h2>
+  </div>
+  <div class="demo">
+    <div class="demo-header">
+      <div class="avatar"></div>
+      <div>
+        <div class="demo-name">Alex</div>
+        <div class="demo-status"><span class="dot"></span> listening</div>
+      </div>
+    </div>
+    <div class="bubble agent">Rempah's in the pan — fry it low and slow till it splits, you'll see the oil pull away from the paste. That's pecah minyak.</div>
+    <div class="bubble user">I don't have kerisik, can I skip it?</div>
+    <div class="bubble agent">You can, but the rendang won't get that nutty depth. If you've got desiccated coconut, dry-toast it dark and pound it — close enough.</div>
+    <div class="bubble user">Got it, toasting now.</div>
+    <div class="bubble agent">Perfect. Once that's in, we're back to step six — santan goes in next, low heat so it doesn't split.</div>
+  </div>
+</section>
+
+<section id="glossary">
+  <div class="section-head">
+    <div class="eyebrow">Speaks your kitchen</div>
+    <h2>Malay terms, explained as you cook.</h2>
+    <p>Alex never assumes you know the vocabulary — and never dumbs it down either.</p>
+  </div>
+  <div class="glossary">
+    <div class="gloss-card">
+      <div class="my">Rempah</div>
+      <div class="en">spice paste</div>
+      <p>The blended base of chilies, shallots, garlic, and aromatics fried until fragrant before anything else goes in.</p>
+    </div>
+    <div class="gloss-card">
+      <div class="my">Santan</div>
+      <div class="en">coconut milk</div>
+      <p>Added late and on low heat — Alex will warn you before it's poured in, since it splits easily if rushed.</p>
+    </div>
+    <div class="gloss-card">
+      <div class="my">Pecah Minyak</div>
+      <div class="en">oil separation</div>
+      <p>The visual cue that a rempah is properly cooked — oil visibly pulls away from the paste.</p>
+    </div>
+    <div class="gloss-card">
+      <div class="my">Belacan</div>
+      <div class="en">shrimp paste</div>
+      <p>Pungent and essential to many sambals. Alex offers substitutes if it's not available locally.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <h2>Your kitchen aunty, on call.</h2>
+  <a href="#demo" class="btn btn-primary">Start talking to Alex</a>
+  <div class="foot-bottom">
+    <span>Built on ElevenLabs Conversational AI</span>
+    <span>Alex — Malay Cuisine Voice Agent</span>
+  </div>
+</footer>
+
+<script>
+  // waveform bars
+  const wave = document.getElementById('wave');
+  for(let i=0;i<28;i++){
+    const s = document.createElement('span');
+    const h = 18 + Math.random()*50;
+    s.style.setProperty('--h', h+'px');
+    s.style.animationDelay = (Math.random()*1.4)+'s';
+    wave.appendChild(s);
+  }
+
+  // scrolling recipe strip
+  const dishes = ["Rendang","Nasi Lemak","Sambal Belacan","Ayam Masak Merah","Laksa","Satay","Asam Pedas","Kuih Lapis"];
+  const stripEl = document.getElementById('strip');
+  const full = [...dishes, ...dishes];
+  full.forEach(d=>{
+    const s = document.createElement('span');
+    s.innerHTML = <em>${d}</em>;
+    stripEl.appendChild(s);
+  });
+</script>
+
+</body>
+</html>
